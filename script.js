@@ -1,209 +1,98 @@
 // ===============================
-// SATISH PORTFOLIO JAVASCRIPT
+// SATISH PORTFOLIO SCRIPT
 // ===============================
 
-// Smooth Scrolling
+// Mobile Menu
+const menuBtn = document.querySelector(".menu-btn");
+const nav = document.querySelector("nav");
+
+if (menuBtn) {
+    menuBtn.addEventListener("click", () => {
+        nav.classList.toggle("active");
+
+        const icon = menuBtn.querySelector("i");
+
+        if (nav.classList.contains("active")) {
+            icon.classList.remove("fa-bars");
+            icon.classList.add("fa-xmark");
+        } else {
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+        }
+    });
+}
+
+// ===============================
+// Smooth Scroll
+// ===============================
+
 document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', function(e) {
+
+    link.addEventListener('click', function(e){
+
         e.preventDefault();
 
-        const target = document.querySelector(this.getAttribute('href'));
+        nav.classList.remove("active");
 
-        if (target) {
-            target.scrollIntoView({
-                behavior: "smooth"
-            });
-        }
-    });
-});
+        const icon = document.querySelector(".menu-btn i");
 
-// ===============================
-// Active Navigation
-// ===============================
-
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll("nav a");
-
-window.addEventListener("scroll", () => {
-
-    let current = "";
-
-    sections.forEach(section => {
-
-        const sectionTop = section.offsetTop - 120;
-        const sectionHeight = section.clientHeight;
-
-        if (pageYOffset >= sectionTop) {
-
-            current = section.getAttribute("id");
-
+        if(icon){
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
         }
 
-    });
-
-    navLinks.forEach(link => {
-
-        link.classList.remove("active");
-
-        if (link.getAttribute("href") === "#" + current) {
-
-            link.classList.add("active");
-
-        }
+        document.querySelector(this.getAttribute("href"))
+        .scrollIntoView({
+            behavior:"smooth"
+        });
 
     });
 
 });
 
 // ===============================
-// Fade Animation on Scroll
+// Sticky Header
 // ===============================
 
-const observer = new IntersectionObserver((entries)=>{
-
-entries.forEach(entry=>{
-
-if(entry.isIntersecting){
-
-entry.target.style.opacity="1";
-entry.target.style.transform="translateY(0px)";
-
-}
-
-});
-
-},
-{
-threshold:0.2
-});
-
-document.querySelectorAll(".card,.project").forEach(el=>{
-
-el.style.opacity="0";
-el.style.transform="translateY(60px)";
-el.style.transition="all .8s ease";
-
-observer.observe(el);
-
-});
-
-// ===============================
-// Typewriter Effect
-// ===============================
-
-const text = "Professional Video Editor";
-
-const heading = document.querySelector(".hero-content h1");
-
-let i = 0;
-
-function typing(){
-
-if(i < text.length){
-
-heading.innerHTML += text.charAt(i);
-
-i++;
-
-setTimeout(typing,80);
-
-}
-
-}
-
-if(heading){
-
-heading.innerHTML="";
-
-typing();
-
-}
-
-// ===============================
-// Hero Image Rotation
-// ===============================
-
-const heroImage = document.querySelector(".hero-image img");
-
-if(heroImage){
-
-heroImage.addEventListener("mouseover",()=>{
-
-heroImage.style.transform="scale(1.05) rotate(3deg)";
-heroImage.style.transition=".4s";
-
-});
-
-heroImage.addEventListener("mouseout",()=>{
-
-heroImage.style.transform="scale(1) rotate(0deg)";
-
-});
-
-}
-
-// ===============================
-// Portfolio Button Animation
-// ===============================
-
-document.querySelectorAll(".project a").forEach(btn=>{
-
-btn.addEventListener("mouseover",()=>{
-
-btn.style.background="#0b3d91";
-
-});
-
-btn.addEventListener("mouseout",()=>{
-
-btn.style.background="#1565c0";
-
-});
-
-});
-
-// ===============================
-// Scroll to Top Button
-// ===============================
-
-const topButton = document.createElement("button");
-
-topButton.innerHTML="↑";
-
-topButton.id="topBtn";
-
-document.body.appendChild(topButton);
-
-topButton.style.position="fixed";
-topButton.style.right="25px";
-topButton.style.bottom="25px";
-topButton.style.width="50px";
-topButton.style.height="50px";
-topButton.style.border="none";
-topButton.style.borderRadius="50%";
-topButton.style.background="#1565c0";
-topButton.style.color="white";
-topButton.style.fontSize="22px";
-topButton.style.cursor="pointer";
-topButton.style.display="none";
-topButton.style.boxShadow="0 10px 30px rgba(0,0,0,.25)";
-topButton.style.zIndex="999";
+const header = document.querySelector("header");
 
 window.addEventListener("scroll",()=>{
 
-if(window.scrollY>500){
+if(window.scrollY>60){
 
-topButton.style.display="block";
+header.style.background="rgba(8,12,20,.95)";
+header.style.boxShadow="0 10px 30px rgba(0,0,0,.35)";
 
 }else{
 
-topButton.style.display="none";
+header.style.background="rgba(10,14,22,.9)";
+header.style.boxShadow="none";
 
 }
 
 });
 
-topButton.onclick=()=>{
+// ===============================
+// Back To Top Button
+// ===============================
+
+const topBtn=document.getElementById("topBtn");
+
+window.addEventListener("scroll",()=>{
+
+if(window.scrollY>400){
+
+topBtn.style.display="flex";
+
+}else{
+
+topBtn.style.display="none";
+
+}
+
+});
+
+topBtn.onclick=()=>{
 
 window.scrollTo({
 
@@ -216,7 +105,192 @@ behavior:"smooth"
 };
 
 // ===============================
-// Console Message
+// Active Navigation
 // ===============================
 
-console.log("Welcome to Satish Portfolio");
+const sections=document.querySelectorAll("section");
+const navLinks=document.querySelectorAll("nav a");
+
+window.addEventListener("scroll",()=>{
+
+let current="";
+
+sections.forEach(section=>{
+
+const sectionTop=section.offsetTop-150;
+
+if(pageYOffset>=sectionTop){
+
+current=section.getAttribute("id");
+
+}
+
+});
+
+navLinks.forEach(link=>{
+
+link.classList.remove("active");
+
+if(link.getAttribute("href")==="#"+current){
+
+link.classList.add("active");
+
+}
+
+});
+
+});
+
+// ===============================
+// Fade Animation
+// ===============================
+
+const observer=new IntersectionObserver((entries)=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.style.opacity="1";
+entry.target.style.transform="translateY(0px)";
+
+}
+
+});
+
+},{
+threshold:.2
+});
+
+document.querySelectorAll(".service-card,.project-card,.testimonial-card,.client-card,.contact-card,.box").forEach(el=>{
+
+el.style.opacity="0";
+el.style.transform="translateY(50px)";
+el.style.transition=".8s";
+
+observer.observe(el);
+
+});
+
+// ===============================
+// Animated Counters
+// ===============================
+
+const counters=document.querySelectorAll(".counter-box h2");
+
+counters.forEach(counter=>{
+
+const updateCounter=()=>{
+
+const text=counter.innerText.replace("+","").replace("M","");
+const target=parseFloat(text);
+
+let current=Number(counter.getAttribute("data-count"))||0;
+
+let increment=target/80;
+
+if(current<target){
+
+current+=increment;
+
+counter.setAttribute("data-count",current);
+
+if(counter.innerText.includes("M")){
+
+counter.innerText=current.toFixed(1)+"M+";
+
+}else{
+
+counter.innerText=Math.ceil(current)+"+";
+
+}
+
+setTimeout(updateCounter,20);
+
+}else{
+
+if(counter.innerText.includes("M")){
+
+counter.innerText=target+"M+";
+
+}else{
+
+counter.innerText=target+"+";
+
+}
+
+}
+
+};
+
+updateCounter();
+
+});
+
+// ===============================
+// Portfolio Hover Glow
+// ===============================
+
+document.querySelectorAll(".project-card").forEach(card=>{
+
+card.addEventListener("mouseenter",()=>{
+
+card.style.boxShadow="0 20px 60px rgba(37,99,235,.45)";
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+card.style.boxShadow="0 10px 30px rgba(0,0,0,.35)";
+
+});
+
+});
+
+// ===============================
+// Hero Typing Effect
+// ===============================
+
+const heroTitle=document.querySelector(".hero-left h4");
+
+if(heroTitle){
+
+const text="Professional Video Editor";
+
+heroTitle.innerHTML="";
+
+let i=0;
+
+function typing(){
+
+if(i<text.length){
+
+heroTitle.innerHTML+=text.charAt(i);
+
+i++;
+
+setTimeout(typing,70);
+
+}
+
+}
+
+typing();
+
+}
+
+// ===============================
+// Footer Year
+// ===============================
+
+const year=document.querySelector(".copyright");
+
+if(year){
+
+const currentYear=new Date().getFullYear();
+
+year.innerHTML=`© ${currentYear} Tadi Kumar Satish Reddy. All Rights Reserved.`;
+
+}
+
+console.log("Portfolio Loaded Successfully");
