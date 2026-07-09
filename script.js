@@ -330,4 +330,37 @@ project.style.display="none";
 
 });
 
+});const youtubePopup = document.getElementById("youtubePopup");
+const youtubeFrame = document.getElementById("youtubeFrame");
+
+document.querySelectorAll(".youtube-video").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        youtubeFrame.src = button.dataset.youtube + "?autoplay=1";
+
+        youtubePopup.classList.add("active");
+
+    });
+
+});
+
+document.querySelector(".close-video").onclick = function(){
+
+    youtubePopup.classList.remove("active");
+
+    youtubeFrame.src = "";
+
+};
+
+youtubePopup.addEventListener("click", function(e){
+
+    if(e.target===youtubePopup){
+
+        youtubePopup.classList.remove("active");
+
+        youtubeFrame.src="";
+
+    }
+
 });
